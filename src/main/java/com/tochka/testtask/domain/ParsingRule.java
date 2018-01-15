@@ -1,9 +1,10 @@
-package domain;
+package com.tochka.testtask.domain;
 
+import com.tochka.testtask.domain.NewsResource;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +15,21 @@ import javax.validation.Valid;
 
 @Entity
 @Data @Accessors(chain = true)
-public class Caption {
+public class ParsingRule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
     private long id;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @Valid
-    private Article article;
+    @NotEmpty
+    private NewsResource newsResource;
+    private String itemDomType;
+    private String itemDomValue;
+    private String captionDomType;
+    private String captionDomValue;
+    private String articleUrlDomType;
+    private String articleUrlDomValue;
 }

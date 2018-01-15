@@ -1,4 +1,4 @@
-package domain;
+package com.tochka.testtask.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -14,21 +14,16 @@ import javax.validation.Valid;
 
 @Entity
 @Data @Accessors(chain = true)
-public class ParsingRule {
+public class NewsResource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
     private long id;
 
+    private String url;
     @OneToOne
     @Valid
     @NotEmpty
-    private NewsResource newsResource;
-    private String itemDomType;
-    private String itemDomValue;
-    private String captionDomType;
-    private String captionDomValue;
-    private String articleUrlDomType;
-    private String articleUrlDomValue;
+    private ParsingRule parsingRule;
 }

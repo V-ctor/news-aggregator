@@ -1,5 +1,6 @@
-package domain;
+package com.tochka.testtask.domain;
 
+import com.tochka.testtask.domain.Article;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,21 +15,13 @@ import javax.validation.Valid;
 
 @Entity
 @Data @Accessors(chain = true)
-public class Article {
+public class Caption {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
     private long id;
 
-    @Valid
-//    @NotEmpty(groups = Searching.class)
-//    @URL(groups = Searching.class)
-    private String url;
-
     @OneToOne(cascade = {CascadeType.ALL})
     @Valid
-    private Caption caption;
-
-    private String text;
-
+    private Article article;
 }
