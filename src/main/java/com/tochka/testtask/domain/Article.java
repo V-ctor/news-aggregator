@@ -21,8 +21,7 @@ public class Article {
     private long id;
 
     @Valid
-//    @NotEmpty(groups = Searching.class)
-//    @URL(groups = Searching.class)
+    @Column(unique=true)
     private String url;
 
     @OneToOne(cascade = {CascadeType.ALL})
@@ -31,4 +30,11 @@ public class Article {
 
     private String text;
 
+    public Article() {
+    }
+
+    public Article(String url, String text) {
+        this.url = url;
+        this.text = text;
+    }
 }

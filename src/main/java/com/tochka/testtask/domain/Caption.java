@@ -1,6 +1,5 @@
 package com.tochka.testtask.domain;
 
-import com.tochka.testtask.domain.Article;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -21,7 +20,16 @@ public class Caption {
     @Column(nullable = false, unique = true)
     private long id;
 
+    private String text;
+
     @OneToOne(cascade = {CascadeType.ALL})
     @Valid
     private Article article;
+
+    public Caption() {
+    }
+
+    public Caption(String text) {
+        this.text = text;
+    }
 }
