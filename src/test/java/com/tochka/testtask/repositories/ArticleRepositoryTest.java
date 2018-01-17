@@ -32,7 +32,7 @@ public class ArticleRepositoryTest extends AbstractTransactionalTestNGSpringCont
         assertTrue(article.getId() != 0);
     }
 
-    public void donotAllowToSaveDuplicates() {
+    public void doNotAllowToSaveDuplicates() {
         for (int i = 0; i < 3; i++) {
             Article article = new Article("www", "news 1");
             Caption caption = new Caption("Caption of news 1");
