@@ -24,7 +24,22 @@
     <i class="glyphicon glyphicon-plus"></i>
 </button>
 <br/>
-
+<form method="POST" enctype="multipart/form-data" th:action="@{/news/addResource}">
+    <table>
+        <tr>
+            <td>Url of news feed (RSS or html):</td>
+            <td><input type="url" name="url"/></td>
+        </tr>
+        <tr>
+            <td>Rule for parsing:</td>
+            <td><input type="file" name="file"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Upload"/></td>
+        </tr>
+    </table>
+</form>
 
 <h2>Список новостей</h2>
 <table id="table" class=" table-striped table-bordered" cellspacing="0" width="100%">
@@ -39,23 +54,23 @@
 </table>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#table').DataTable({
-            processing: true,
-            serverSide: true,
-            pagingType: "full_numbers",
-            ordering: true,
-            ajax: {
-                type: "POST",
-                url: "",
-                "dataSrc": function (json) {
-                    json['recordsTotal'] = json['totalElements'];
-                    json['recordsFiltered'] = json['totalElements'];
-                    return json.content;
-                }
-            },
-        });
-    });
+    // $(document).ready(function () {
+    //     $('#table').DataTable({
+    //         processing: true,
+    //         serverSide: true,
+    //         pagingType: "full_numbers",
+    //         ordering: true,
+    //         ajax: {
+    //             type: "POST",
+    //             url: "",
+    //             "dataSrc": function (json) {
+    //                 json['recordsTotal'] = json['totalElements'];
+    //                 json['recordsFiltered'] = json['totalElements'];
+    //                 return json.content;
+    //             }
+    //         },
+    //     });
+    // });
 
 
 </script>

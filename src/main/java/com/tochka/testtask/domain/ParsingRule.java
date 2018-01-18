@@ -2,19 +2,18 @@ package com.tochka.testtask.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +27,9 @@ public class ParsingRule {
     @Column(nullable = false, unique = true)
     private long id;
 
-    @OneToOne
-    @Valid
-    @NotEmpty
+    @OneToOne(cascade = {CascadeType.ALL})
     private NewsResource newsResource;
+
     private String itemDomValue;
     private String captionDomValue;
     private String articleUrlDomValue;
