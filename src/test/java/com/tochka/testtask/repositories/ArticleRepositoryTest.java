@@ -1,7 +1,7 @@
 package com.tochka.testtask.repositories;
 
 import com.tochka.testtask.domain.Article;
-import com.tochka.testtask.domain.Caption;
+import com.tochka.testtask.domain.Title;
 import com.tochka.testtask.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 @Test
@@ -18,15 +19,15 @@ import static org.testng.Assert.assertTrue;
 public class ArticleRepositoryTest extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    TitleRepository titleRepository;
 
     @Autowired
     ArticleService articleService;
 
     public void saveTest() {
-        Article article = new Article("www", "news 1");
-        Caption caption = new Caption("Caption of news 1");
-        article.setCaption(caption);
-        caption.setArticle(article);
+        final Article article = new Article("www", "news 1");
+        article.setTitle("Title of news 1");
 
         articleRepository.save(article);
         assertTrue(article.getId() != 0);
@@ -35,12 +36,23 @@ public class ArticleRepositoryTest extends AbstractTransactionalTestNGSpringCont
     public void doNotAllowToSaveDuplicates() {
         for (int i = 0; i < 3; i++) {
             Article article = new Article("www", "news 1");
-            Caption caption = new Caption("Caption of news 1");
-            article.setCaption(caption);
-            caption.setArticle(article);
+            Title title = new Title("Title of news 1");
+            article.setTitle("Title of news 1");
 
             articleService.save(article);
         }
-        assertTrue(articleRepository.count()==1);
+        assertTrue(articleRepository.count() == 1);
     }
+
+    public void saveArticleAndGetTileTest() {
+        final String titleOfNews = "Title of news ";
+        final Article article = new Article("www", "news 1");
+        article.setTitle(titleOfNews);
+
+        articleRepository.save(article);
+        assertEquals(titleRepository.count(), 1);
+        assertEquals(titleRepository.findAll().get(0).getTitle(), titleOfNews);
+    }
+
+
 }

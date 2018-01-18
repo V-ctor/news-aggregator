@@ -31,7 +31,7 @@ public class ParsingRule {
     private NewsResource newsResource;
 
     private String itemDomValue;
-    private String captionDomValue;
+    private String titleDomValue;
     private String articleUrlDomValue;
     private String articleUrlDomAttribute;
     private String articleTextDomValue;
@@ -42,7 +42,7 @@ public class ParsingRule {
         ArrayList<Article> articles = new ArrayList<>(articleElements.size());
         articleElements.forEach(element -> {
             try {
-                articles.add(elementToArticleAndCaption(element));
+                articles.add(elementToArticle(element));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -51,15 +51,14 @@ public class ParsingRule {
         return articles;
     }
 
-    private Article elementToArticleAndCaption(Element element) throws IOException {
-        final Caption caption = elementToCaption(element);
-        final Article article = elementToArticle(element);
-        article.setCaption(caption);
-        caption.setArticle(article);
+    private Article elementToArticle(Element element) throws IOException {
+        final String title = getTitleFromElement(element);
+        final Article article = getArticleFromElement(element);
+        article.setTitle(title);
         return article;
     }
 
-    private Article elementToArticle(Element element) throws IOException {
+    private Article getArticleFromElement(Element element) throws IOException {
         final Element urlElement = element.selectFirst(articleUrlDomValue);
         final String url = urlElement.attr(articleUrlDomAttribute);
         final Document document = Jsoup.connect(url).get();
@@ -67,8 +66,7 @@ public class ParsingRule {
         return new Article(url, textElement.outerHtml());
     }
 
-    private Caption elementToCaption(Element element) {
-        final Element captionElement = element.selectFirst(captionDomValue);
-        return new Caption(captionElement.text());
+    private String getTitleFromElement(Element element) {
+        return element.selectFirst(titleDomValue).text();
     }
 }

@@ -33,7 +33,7 @@ public class NewsResourceControllerTest extends AbstractTransactionalTestNGSprin
     public void testAddNewsResource() throws Exception {
         final String parseRuleAsJson = "{\n"
             + "  \"itemDomValue\": null,\n"
-            + "  \"captionDomValue\": \".e1-article__tit\",\n"
+            + "  \"titleDomValue\": \".e1-article__tit\",\n"
             + "  \"articleUrlDomValue\": null,\n"
             + "  \"articleUrlDomAttribute\": null,\n"
             + "  \"articleTextDomValue\": null\n"

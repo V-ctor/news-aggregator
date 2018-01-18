@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
-    <title>Сервис агрегации новостей</title>
+    <title>News aggregation service</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -19,10 +19,10 @@
     <link th:src="@{/webjars/datatables/1.10.16/css/dataTables.bootstrap4.css}" rel="stylesheet"/>
 </head>
 <body>
-<label>Добавить ресурс новостей</label>
-<button id="updateDB" class="btn btn-sm btn-primary " onclick="addNewsResource()">
-    <i class="glyphicon glyphicon-plus"></i>
-</button>
+<label>Add news feed</label>
+<!--<button id="updateDB" class="btn btn-sm btn-primary " onclick="addNewsResource()">-->
+    <!--<i class="glyphicon glyphicon-plus"></i>-->
+<!--</button>-->
 <br/>
 <form method="POST" enctype="multipart/form-data" th:action="@{/news/addResource}">
     <table>
@@ -36,19 +36,19 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Upload"/></td>
+            <td><input type="submit" value="Upload/Add"/></td>
         </tr>
     </table>
 </form>
 
-<h2>Список новостей</h2>
+<h2>News list</h2>
 <table id="table" class=" table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
     <tr>
-        <th>Заголовок</th>
-        <th>Автор</th>
-        <th>Дата</th>
-        <th>Источник</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Source</th>
     </tr>
     </thead>
 </table>
@@ -77,7 +77,7 @@
 
 <footer class="navbar-fixed-bottom row-fluid">
     <div id="information">
-        Создано Евитченко Виктором. 2018г
+        Developed by Yevitchenko Victor. 2018г
     </div>
 </footer>
 </body>

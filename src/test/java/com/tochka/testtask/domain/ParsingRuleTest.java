@@ -26,17 +26,16 @@ public class ParsingRuleTest {
         return new PowerMockObjectFactory();
     }
 
-    public void testElementToCaption() throws Exception {
-        final String captionText = "Участники \"Уральских пельменей\" потребовали с бывшего директора 28 миллионов рублей";
-        final Element element = new Element("h3").addClass("e1-article__tit").text(
-            captionText);
-        final ParsingRule parsingRule = new ParsingRule().setCaptionDomValue(".e1-article__tit");
+    public void testElementToTitle() throws Exception {
+        final String titleText = "Участники \"Уральских пельменей\" потребовали с бывшего директора 28 миллионов рублей";
+        final Element element = new Element("h3").addClass("e1-article__tit").text(titleText);
+        final ParsingRule parsingRule = new ParsingRule().setTitleDomValue(".e1-article__tit");
 
-        final Method method = ParsingRule.class.getDeclaredMethod("elementToCaption", Element.class);
+        final Method method = ParsingRule.class.getDeclaredMethod("getTitleFromElement", Element.class);
         method.setAccessible(true);
-        final Caption caption = (Caption) method.invoke(parsingRule, element);
+        final String title = (String) method.invoke(parsingRule, element);
 
-        assertEquals(caption.getText(), captionText);
+        assertEquals(title, titleText);
     }
 
     public void testElementToArticle() throws Exception {
@@ -86,6 +85,7 @@ public class ParsingRuleTest {
         Mockito.when(connection.get()).thenReturn(articleDocument);
 
         final ParsingRule parsingRule = new ParsingRule()
+            .setTitleDomValue(".e1-article__tit")
             .setArticleUrlDomValue("a.e1-article__link")
             .setArticleUrlDomAttribute("href")
             .setArticleTextDomValue(".article-text");
