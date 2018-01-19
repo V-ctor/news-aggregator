@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tochka.testtask.domain.NewsResource;
 import com.tochka.testtask.domain.ParsingRule;
 import com.tochka.testtask.domain.Title;
+import com.tochka.testtask.repositories.ArticleRepository;
 import com.tochka.testtask.repositories.NewsResourceRepository;
 import com.tochka.testtask.repositories.ParsingRuleRepository;
 import com.tochka.testtask.service.TitleService;
@@ -24,13 +25,15 @@ import java.io.IOException;
 @RequestMapping("/news")
 public class NewsResourceController {
     private NewsResourceRepository newsResourceRepository;
+    private ArticleRepository articleRepository;
     private TitleService titleService;
     private Logger logger = LogManager.getLogger(NewsResourceController.class);
 
     @Autowired
     public NewsResourceController(NewsResourceRepository newsResourceRepository, ParsingRuleRepository parsingRuleRepository,
-        TitleService titleService) {
+        ArticleRepository articleRepository, TitleService titleService) {
         this.newsResourceRepository = newsResourceRepository;
+        this.articleRepository = articleRepository;
         this.titleService = titleService;
     }
 
@@ -51,5 +54,11 @@ public class NewsResourceController {
     public Page<Title> find(@RequestParam("title") String title, @RequestParam int start, @RequestParam int length,
         @RequestParam String sortField, @RequestParam String sortDir) {
         return titleService.findByAnyTitleContaining(title, start, length, sortField, sortDir);
+    }
+
+    @PostMapping("/getArticle")
+    @ResponseBody
+    public String find(@RequestParam long id) {
+        return articleRepository.getOne(id).getText();
     }
 }
