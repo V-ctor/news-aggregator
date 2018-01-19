@@ -20,6 +20,7 @@ public class NewsResource {
     @Column(nullable = false, unique = true)
     private long id;
 
+    @Column(unique=true)
     private String url;
 
     @OneToOne(cascade = {CascadeType.ALL})

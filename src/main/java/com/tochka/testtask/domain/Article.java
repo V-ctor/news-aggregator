@@ -21,7 +21,7 @@ public class Article {
     private long id;
 
     @Valid
-    @Column(unique=true)
+    @Column(unique=true, length = 5*1024*1024)
     private String url;
 
     private String title;
