@@ -25,6 +25,8 @@ public class Article {
     private String url;
 
     private String title;
+    private String author;
+    private String date;
 
     private String text;
 

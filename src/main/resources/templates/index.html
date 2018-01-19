@@ -21,7 +21,7 @@
 <body>
 <label>Add news feed</label>
 <!--<button id="updateDB" class="btn btn-sm btn-primary " onclick="addNewsResource()">-->
-    <!--<i class="glyphicon glyphicon-plus"></i>-->
+<!--<i class="glyphicon glyphicon-plus"></i>-->
 <!--</button>-->
 <br/>
 <form method="POST" enctype="multipart/form-data" th:action="@{/news/addResource}">
@@ -54,23 +54,36 @@
 </table>
 
 <script type="text/javascript">
-    // $(document).ready(function () {
-    //     $('#table').DataTable({
-    //         processing: true,
-    //         serverSide: true,
-    //         pagingType: "full_numbers",
-    //         ordering: true,
-    //         ajax: {
-    //             type: "POST",
-    //             url: "",
-    //             "dataSrc": function (json) {
-    //                 json['recordsTotal'] = json['totalElements'];
-    //                 json['recordsFiltered'] = json['totalElements'];
-    //                 return json.content;
-    //             }
-    //         },
-    //     });
-    // });
+    $(document).ready(function () {
+        $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            pagingType: "full_numbers",
+            ordering: true,
+            ajax: {
+                type: "POST",
+                url: /*"[[@{//news/findTitles}]]"*/"/news/findTitles",
+                data: function (d) {
+                    var table = $('#table').DataTable();
+                    d.page = (table !== undefined) ? table.page.info().page : 0;
+                    d.size = (table !== undefined) ? table.page.info().length : 10;
+                    d.title = d.search.value;
+                    d.sortField = d.columns[d.order[0].column].data;
+                    d.sortDir = d.order[0].dir;
+                },
+                "dataSrc": function (json) {
+                    json['recordsTotal'] = json['totalElements'];
+                    json['recordsFiltered'] = json['totalElements'];
+                    return json.content;
+                }
+            },
+            columns: [
+                {data: 'title', orderable: true},
+                {data: 'author', orderable: true},
+                {data: 'date', orderable: true},
+            ]
+        });
+    });
 
 
 </script>

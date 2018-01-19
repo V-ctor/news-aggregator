@@ -22,7 +22,8 @@ public class Title {
     private long id;
 
     private String title;
-
+    private String author;
+    private String date;
     public Title() {
     }
 
