@@ -3,6 +3,7 @@ package com.tochka.testtask.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tochka.testtask.domain.NewsResource;
 import com.tochka.testtask.domain.ParsingRule;
+import com.tochka.testtask.domain.ResourceType;
 import com.tochka.testtask.domain.Title;
 import com.tochka.testtask.repositories.ArticleRepository;
 import com.tochka.testtask.repositories.NewsResourceRepository;
@@ -38,11 +39,14 @@ public class NewsResourceController {
     }
 
     @PostMapping("/addResource")
-    public String addNewsResource(@RequestParam("file") MultipartFile parseRuleFile, @RequestParam String url) throws IOException {
+    public String addNewsResource(@RequestParam("file") MultipartFile parseRuleFile,
+        @RequestParam String url, @RequestParam int resourceTypeId) throws IOException {
 
         final ObjectMapper objectMapper = new ObjectMapper();
         final ParsingRule parsingRule = objectMapper.readValue(parseRuleFile.getBytes(), ParsingRule.class);
         final NewsResource newsResource = new NewsResource(url).setParsingRule(parsingRule);
+        final ResourceType resourceType = ResourceType.fromId(resourceTypeId);
+        newsResource.setResourceType(resourceType);
         parsingRule.setNewsResource(newsResource);
 
         newsResourceRepository.save(newsResource);

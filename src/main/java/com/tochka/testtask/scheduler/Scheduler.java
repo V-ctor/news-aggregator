@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,7 +26,8 @@ public class Scheduler {
         this.articleService = articleService;
     }
 
-    @Scheduled(fixedRate=5*1000*60)
+//    @Scheduled(fixedRate=5*1000*60)
+//    @Scheduled(fixedRate=5*1000)
     private void doTheJob() {
         newsResourceRepository.findAll().forEach(newsResource -> {
             final ParsingRule parsingRule = newsResource.getParsingRule();
