@@ -15,8 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Data @Accessors(chain = true)
@@ -34,6 +39,10 @@ public class ParsingRule {
     private String titleDomValue;
     private String articleUrlDomValue;
     private String articleUrlDomAttribute;
+    private String articleAuthorDomAttribute;
+    private String articleDateDomAttribute;
+    private String dateFormat;
+    private String dateLocale;
     private String articleTextDomValue;
 
     public List<Article> parse(Document document) {
@@ -62,8 +71,33 @@ public class ParsingRule {
         final Element urlElement = element.selectFirst(articleUrlDomValue);
         final String url = urlElement.attr(articleUrlDomAttribute);
         final Document document = Jsoup.connect(url).get();
+        String author = null;
+        if (articleAuthorDomAttribute != null) {
+            final Element authorElement = document.selectFirst(articleAuthorDomAttribute);
+            author = authorElement == null ? null : authorElement.text();
+        }
+        Date date = null;
+        if (articleDateDomAttribute != null && dateFormat != null && dateLocale != null) {
+            final Element dateElement = document.selectFirst(articleDateDomAttribute);
+            if (dateElement == null) {
+                date = new Date();
+            } else {
+                date = getDate(dateElement.text(), dateFormat, dateLocale);
+            }
+        }
         final Element textElement = document.selectFirst(articleTextDomValue);
-        return new Article(url, textElement.outerHtml());
+        return new Article(url, textElement.outerHtml(), date, author);
+    }
+
+    private Date getDate(final String dateString, final String format, final String locale) {
+        DateFormat df = new SimpleDateFormat(format, new Locale(locale));
+        Date result = null;
+        try {
+            result = df.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     private String getTitleFromElement(Element element) {

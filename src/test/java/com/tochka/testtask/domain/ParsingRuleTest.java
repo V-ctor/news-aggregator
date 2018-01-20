@@ -13,6 +13,7 @@ import org.testng.annotations.ObjectFactory;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.testng.AssertJUnit.assertEquals;
@@ -95,5 +96,17 @@ public class ParsingRuleTest {
         final Article article = (Article) method.invoke(parsingRule, itemElement);
 
         assertEquals(Jsoup.parse(article.getText()), Jsoup.parse(innerHtml));
+    }
+
+    @Test
+    public void testGetDate() throws Exception {
+        final ParsingRule parsingRule = new ParsingRule();
+        //        final String dateString = "Thu Sep 28 20:29:30 JST 2000";
+        final String dateString = "19 Январь 2018, 16:35";
+        final Method method = ParsingRule.class.getDeclaredMethod("getDate", String.class, String.class, String.class);
+        method.setAccessible(true);
+        final Date date = (Date) method.invoke(parsingRule, dateString, "dd MMM yyyy, kk:mm", "ru");
+        System.out.println(date);
+
     }
 }

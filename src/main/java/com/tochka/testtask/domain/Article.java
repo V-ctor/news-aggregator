@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.Valid;
+import java.util.Date;
 
 @Entity
 @Table(name = "Articles")
@@ -21,12 +22,12 @@ public class Article {
     private long id;
 
     @Valid
-    @Column(unique=true, length = 5*1024*1024)
+    @Column(unique = true, length = 5 * 1024 * 1024)
     private String url;
 
     private String title;
     private String author;
-    private String date;
+    private Date date;
 
     private String text;
 
@@ -35,6 +36,13 @@ public class Article {
 
     public Article(String url, String text) {
         this.url = url;
+        this.text = text;
+    }
+
+    public Article(String url, String text, Date date, String author) {
+        this.url = url;
+        this.author = author;
+        this.date = date;
         this.text = text;
     }
 }
