@@ -39,7 +39,7 @@ public class NewsResourceController {
     }
 
     @PostMapping("/addResource")
-    public String addNewsResource(@RequestParam("file") MultipartFile parseRuleFile,
+    public String addNewsResource(@RequestParam(name = "file", required = false) MultipartFile parseRuleFile,
         @RequestParam String url, @RequestParam int resourceTypeId) throws IOException {
 
         final ObjectMapper objectMapper = new ObjectMapper();
