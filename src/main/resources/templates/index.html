@@ -64,6 +64,15 @@
     </table>
 </form>
 
+<table id="table_of_feeds" class=" table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>url</th>
+        <th>resourceType</th>
+    </tr>
+    </thead>
+</table>
 <h2>News list</h2>
 <table id="table" class=" table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
@@ -81,6 +90,26 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        const feedsTable = $('#table_of_feeds').DataTable({
+            processing: true,
+            serverSide: true,
+            // pagingType: "full_numbers",
+            // ordering: true,
+            paging: false,
+            "bFilter": false, //hide Search bar
+            "bInfo": false, // hide showing entries
+            ajax: {
+                type: "POST",
+                url: /*"[[@{//news/listOfResources}]]"*/"/news/listOfResources",
+                dataSrc: ""
+            },
+            columns: [
+                {data: 'id', orderable: true, visible: false},
+                {data: 'url', orderable: true},
+                {data: 'resourceType', orderable: true}
+            ]
+        });
+
         const table = $('#table').DataTable({
             processing: true,
             serverSide: true,

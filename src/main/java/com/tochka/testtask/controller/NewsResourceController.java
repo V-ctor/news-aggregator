@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/news")
@@ -64,5 +65,11 @@ public class NewsResourceController {
     @ResponseBody
     public String find(@RequestParam long id) {
         return articleRepository.getOne(id).getText();
+    }
+
+    @PostMapping("/listOfResources")
+    @ResponseBody
+    public List<NewsResource> getListOfResources() {
+        return newsResourceRepository.findAll();
     }
 }

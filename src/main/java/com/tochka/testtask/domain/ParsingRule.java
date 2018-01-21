@@ -1,5 +1,6 @@
 package com.tochka.testtask.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jsoup.Jsoup;
@@ -33,6 +34,7 @@ public class ParsingRule {
     private long id;
 
     @OneToOne(cascade = {CascadeType.ALL})
+    @JsonBackReference
     private NewsResource newsResource;
 
     private String itemDomValue;
