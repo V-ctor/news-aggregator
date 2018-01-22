@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TitleRepository extends JpaRepository<Title, Long> {
 
-    Page<Title> findByTitleContaining(String nameSubString, Pageable pageable);
+    Page<Title> findByTitleContainingIgnoreCase(String nameSubString, Pageable pageable);
 }

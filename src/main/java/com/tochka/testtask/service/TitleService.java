@@ -29,7 +29,7 @@ public class TitleService {
         assert start < length;
         final int page = start / length;
         final Pageable pageable = new PageRequest(page, length);
-        return titleRepository.findByTitleContaining(nameSubString, pageable);
+        return titleRepository.findByTitleContainingIgnoreCase(nameSubString, pageable);
     }
 
     public Page<Title> findByAnyTitleContaining(String nameSubString, int start, int length, String sortField, String sortDir) {
@@ -39,7 +39,7 @@ public class TitleService {
         final int page = start / length;
 
         final Pageable pageable = new PageRequest(page, length, Sort.Direction.fromString(sortDir), sortField);
-        return titleRepository.findByTitleContaining(nameSubString, pageable);
+        return titleRepository.findByTitleContainingIgnoreCase(nameSubString, pageable);
     }
 
     public void save(Title title) {
