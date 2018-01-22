@@ -43,12 +43,16 @@ public class NewsResourceController {
     public String addNewsResource(@RequestParam(name = "file", required = false) MultipartFile parseRuleFile,
         @RequestParam String url, @RequestParam int resourceTypeId) throws IOException {
 
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final ParsingRule parsingRule = objectMapper.readValue(parseRuleFile.getBytes(), ParsingRule.class);
-        final NewsResource newsResource = new NewsResource(url).setParsingRule(parsingRule);
         final ResourceType resourceType = ResourceType.fromId(resourceTypeId);
+        ParsingRule parsingRule = null;
+        if (parseRuleFile.getBytes().length != 0) {
+            final ObjectMapper objectMapper = new ObjectMapper();
+            parsingRule = objectMapper.readValue(parseRuleFile.getBytes(), ParsingRule.class);
+        }
+        final NewsResource newsResource = new NewsResource(url).setParsingRule(parsingRule);
         newsResource.setResourceType(resourceType);
-        parsingRule.setNewsResource(newsResource);
+        if (parsingRule != null)
+            parsingRule.setNewsResource(newsResource);
 
         newsResourceRepository.save(newsResource);
         return "redirect:/";
