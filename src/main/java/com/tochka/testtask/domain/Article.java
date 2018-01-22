@@ -22,13 +22,15 @@ public class Article {
     private long id;
 
     @Valid
-    @Column(unique = true, length = 5 * 1024 * 1024)
+    @Column(unique = true, length = 5 * 1024)
     private String url;
 
+    @Column(length = 1024)
     private String title;
     private String author;
     private Date date;
 
+    @Column(length = 5 * 1024 * 1024)
     private String text;
 
     public Article() {
