@@ -1,5 +1,5 @@
 {
-  "itemDomValue": ".e1-article-section_cover > .e1-article-section__content",
+  "itemDomValue": ".e1-article-section_cover > .e1-article-section__content > .e1-article",
   "titleDomValue": ".e1-article__tit",
   "articleUrlDomValue": ".e1-article__link",
   "articleUrlDomAttribute": "href",
