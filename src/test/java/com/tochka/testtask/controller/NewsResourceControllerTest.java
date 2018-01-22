@@ -42,7 +42,8 @@ public class NewsResourceControllerTest extends AbstractTransactionalTestNGSprin
         MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
             "text/plain", parseRuleAsJson.getBytes());
         this.mvc.perform(fileUpload("/news/addResource").file(multipartFile)
-            .param("url", "www.aaa.bbb"))
+            .param("url", "www.aaa.bbb")
+            .param("resourceTypeId", "0"))
             .andExpect(status().isFound())
             .andExpect(header().string("Location", "/"));
 
