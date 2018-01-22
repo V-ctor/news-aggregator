@@ -35,9 +35,9 @@ public class Scheduler {
         this.articleService = articleService;
     }
 
-    @Scheduled(fixedRate = 5 * 1000 * 60)
-    //    @Scheduled(fixedRate = 5 * 1000)
-    private void doTheJob() {
+//    @Scheduled(fixedRate = 5 * 1000 * 60)
+        @Scheduled(fixedRate = 5 * 1000)
+    public void doTheJob() {
         newsResourceRepository.findAll().forEach(newsResource -> {
             List<Article> entries;
             final String url = newsResource.getUrl();

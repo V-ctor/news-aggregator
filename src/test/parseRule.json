@@ -1,0 +1,11 @@
+{
+  "itemDomValue": ".e1-article-section_cover > .e1-article-section__content",
+  "titleDomValue": ".e1-article__tit",
+  "articleUrlDomValue": ".e1-article__link",
+  "articleUrlDomAttribute": "href",
+  "articleAuthorDomAttribute": ".news-media-author",
+  "articleDateDomAttribute": ".e1-news-item__info-date",
+  "dateFormat": "dd MMM yyyy, kk:mm",
+  "dateLocale": "ru",
+  "articleTextDomValue": "#newscontent"
+}

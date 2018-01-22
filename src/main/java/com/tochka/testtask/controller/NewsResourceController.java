@@ -8,6 +8,7 @@ import com.tochka.testtask.domain.Title;
 import com.tochka.testtask.repositories.ArticleRepository;
 import com.tochka.testtask.repositories.NewsResourceRepository;
 import com.tochka.testtask.repositories.ParsingRuleRepository;
+import com.tochka.testtask.scheduler.Scheduler;
 import com.tochka.testtask.service.TitleService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -29,14 +30,16 @@ public class NewsResourceController {
     private NewsResourceRepository newsResourceRepository;
     private ArticleRepository articleRepository;
     private TitleService titleService;
+    private Scheduler scheduler;
     private Logger logger = LogManager.getLogger(NewsResourceController.class);
 
     @Autowired
     public NewsResourceController(NewsResourceRepository newsResourceRepository, ParsingRuleRepository parsingRuleRepository,
-        ArticleRepository articleRepository, TitleService titleService) {
+        ArticleRepository articleRepository, TitleService titleService, Scheduler scheduler) {
         this.newsResourceRepository = newsResourceRepository;
         this.articleRepository = articleRepository;
         this.titleService = titleService;
+        this.scheduler = scheduler;
     }
 
     @PostMapping("/addResource")
@@ -55,6 +58,7 @@ public class NewsResourceController {
             parsingRule.setNewsResource(newsResource);
 
         newsResourceRepository.save(newsResource);
+        scheduler.doTheJob();
         return "redirect:/";
     }
 
