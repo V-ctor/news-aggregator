@@ -73,7 +73,11 @@
     </tr>
     </thead>
 </table>
+
 <h2>News list</h2>
+<form method="POST" enctype="multipart/form-data" th:action="@{/news/deleteAllArticles}">
+    <td><input type="submit" value="Delete all articles"/></td>
+</form>
 <table id="table" class=" table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
     <tr>
@@ -85,6 +89,8 @@
     </tr>
     </thead>
 </table>
+
+
 <div id="article_content">
 
 </div>

@@ -71,6 +71,12 @@ public class NewsResourceController {
         return articleRepository.getOne(id).getText();
     }
 
+    @PostMapping("/deleteAllArticles")
+    public String deleteAllArticles() {
+        articleRepository.deleteAll();
+        return "redirect:/";
+    }
+
     @PostMapping("/listOfResources")
     @ResponseBody
     public List<NewsResource> getListOfResources() {
