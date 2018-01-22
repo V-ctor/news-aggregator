@@ -73,6 +73,7 @@
     </tr>
     </thead>
 </table>
+<button onclick="deleteFeed()">Delete selected feed</button>
 
 <h2>News list</h2>
 <form method="POST" enctype="multipart/form-data" th:action="@{/news/deleteAllArticles}">
@@ -95,7 +96,21 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
+    var selectedTitleId = null;
+    function deleteFeed() {
+        if (selectedTitleId == null) {
+            alert("You have to select feed for delete.");
+            return;
+        }
+        $.post({
+            url: "news/deleteNewsResource",
+            data: {id: selectedTitleId}
+        }).done(function (data) {
+            feedsTable.ajax.reload();
+        });
+    }
+
+    // $(document).ready(function () {
         const feedsTable = $('#table_of_feeds').DataTable({
             processing: true,
             serverSide: true,
@@ -114,6 +129,16 @@
                 {data: 'url', orderable: true},
                 {data: 'resourceType', orderable: true}
             ]
+        });
+
+        $('#table_of_feeds tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            } else {
+                feedsTable.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                selectedTitleId = feedsTable.row($(this)).data()["id"];
+            }
         });
 
         const table = $('#table').DataTable({
@@ -149,8 +174,7 @@
         $('#table tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
-            }
-            else {
+            } else {
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
             }
@@ -167,7 +191,7 @@
             });
         });
 
-    });
+    // });
 
 
 </script>

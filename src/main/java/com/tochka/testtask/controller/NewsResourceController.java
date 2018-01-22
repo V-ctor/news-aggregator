@@ -82,4 +82,11 @@ public class NewsResourceController {
     public List<NewsResource> getListOfResources() {
         return newsResourceRepository.findAll();
     }
+
+    @PostMapping("/deleteNewsResource")
+    public String deleteNewsResource(@RequestParam long id) {
+        newsResourceRepository.delete(id);
+        return "redirect:/";
+    }
+
 }
